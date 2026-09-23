@@ -13,3 +13,14 @@
 .externalNativeBuild
 .cxx
 local.properties
+# Signing + secrets: never commit these. Release is debug-signed (see
+# app/build.gradle.kts); a real upload key goes here, untracked.
+*.jks
+*.keystore
+*.p12
+keystore.properties
+.env
+google-services.json
+# Build outputs ship as GitHub Release assets, not repo files.
+*.apk
+*.aab

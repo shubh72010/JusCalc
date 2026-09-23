@@ -9,6 +9,7 @@ activityCompose = "1.13.0"
 kotlin = "2.4.10"
 composeBom = "2026.02.01"
 shapes = "1.2.1"
+evalex = "3.7.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -26,6 +27,7 @@ androidx-compose-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-
 androidx-compose-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3" }
 kyant-shapes = { group = "io.github.kyant0", name = "shapes", version.ref = "shapes" }
+evalex = { group = "com.ezylang", name = "EvalEx", version.ref = "evalex" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

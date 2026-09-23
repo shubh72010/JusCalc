@@ -21,6 +21,10 @@ android {
 
     buildTypes {
         release {
+            // Personal-device signing with the well-known debug key (same
+            // signature as debug builds, so release installs over them).
+            // ponytail: before any store upload, swap in a real upload key.
+            signingConfig = signingConfigs.getByName("debug")
             optimization {
                 enable = false
             }
@@ -43,6 +47,7 @@ dependencies {
     implementation(libs.androidx.compose.ui.graphics)
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.kyant.shapes)
+    implementation(libs.evalex)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     testImplementation(libs.junit)

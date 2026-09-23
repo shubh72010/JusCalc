@@ -1,0 +1,43 @@
+# Release: push a v* tag (or run manually) → unit tests → release APK →
+# attested GitHub Release. Release is signed with the debug key (see
+# app/build.gradle.kts); swap in a real upload key before any store upload.
+name: release
+
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  id-token: write
+  attestations: write
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: "17"
+          cache: gradle
+      - uses: android-actions/setup-android@v4
+      - name: Unit tests
+        run: ./gradlew :app:testDebugUnitTest
+      - name: Release APK
+        run: ./gradlew :app:assembleRelease
+      - uses: actions/attest-build-provenance@v4
+        with:
+          subject-path: app/build/outputs/apk/release/app-release.apk
+      - uses: softprops/action-gh-release@v3
+        with:
+          files: app/build/outputs/apk/release/app-release.apk
+          generate_release_notes: true
