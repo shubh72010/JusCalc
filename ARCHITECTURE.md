@@ -23,7 +23,7 @@ Single-module Android app (`:app`), 100% Jetpack Compose. Two Kotlin files do ne
 
 - **EvalEx, not hand-rolled parsing.** `BigDecimal` math with a 12-digit `HALF_UP` context; normalizes `× ÷ x X` before evaluating.
 - **Compact magnitudes** (`numberToCompact`) for display only; history reloads the full plain result so precision is never lost.
-- **Debug-signed release.** `app/build.gradle.kts` signs `release` with the debug key: installable, installs over debug builds, zero secret management. Swap in a real upload key before any store upload.
+- **Upload-signed release.** `release` signs with the upload key from untracked `keystore.properties` (+ `juscalc-upload.jks` — back both up or the Play listing can never be updated). Without them it falls back to the debug key, so CI tag builds keep working.
 - **No R8/minify** (`optimization.enable = false`). APK is ~8 MB; enable when size matters.
 - **Back handling is layered:** one `BackHandler` closes settings, then history, then lets the app exit.
 - **CI releases on tags.** Push `v*` → `.github/workflows/release.yml` runs unit tests, `assembleRelease`, attests provenance, publishes the APK to a GitHub Release.

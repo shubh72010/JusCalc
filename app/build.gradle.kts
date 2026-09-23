@@ -3,6 +3,8 @@ plugins {
     alias(libs.plugins.kotlin.compose)
 }
 
+import java.util.Properties
+
 android {
     namespace = "com.jusdots.juscalc"
     compileSdk {
@@ -13,18 +15,34 @@ android {
         applicationId = "com.jusdots.juscalc"
         minSdk = 24
         targetSdk = 37
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 2
+        versionName = "1.0.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    // Upload-key signing from untracked ../keystore.properties (back it up
+    // with juscalc-upload.jks). Absent on CI → falls back to the debug key
+    // so tag builds keep working without secrets.
+    val keyProps = Properties()
+    val keyFile = rootProject.file("keystore.properties")
+    if (keyFile.exists()) keyFile.inputStream().use { keyProps.load(it) }
+    signingConfigs {
+        create("release") {
+            val propsFile = keyProps.getProperty("releaseStoreFile")
+            if (propsFile != null) {
+                storeFile = file(propsFile)
+                storePassword = keyProps.getProperty("releaseStorePassword")
+                keyAlias = keyProps.getProperty("releaseKeyAlias")
+                keyPassword = keyProps.getProperty("releaseKeyPassword")
+            } else {
+                initWith(signingConfigs.getByName("debug"))
+            }
+        }
+    }
     buildTypes {
         release {
-            // Personal-device signing with the well-known debug key (same
-            // signature as debug builds, so release installs over them).
-            // ponytail: before any store upload, swap in a real upload key.
-            signingConfig = signingConfigs.getByName("debug")
+            signingConfig = signingConfigs.getByName("release")
             optimization {
                 enable = false
             }

@@ -39,7 +39,7 @@ Numbers live on two rotary dial strips — `0–4` and `5–9`. Drag a strip and
 
 ```sh
 ./gradlew :app:assembleDebug       # APK in app/build/outputs/apk/debug/
-./gradlew :app:assembleRelease     # debug-signed release APK, installs over debug
+./gradlew :app:assembleRelease     # upload-signed release APK (debug-signed on CI without the key)
 ./gradlew :app:installRelease      # install the release on the connected device
 ./gradlew :app:testDebugUnitTest   # unit tests
 ./gradlew :app:lintRelease         # must be 0 errors

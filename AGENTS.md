@@ -33,4 +33,4 @@ adb shell screencap -p /sdcard/x.png && adb pull /sdcard/x.png /tmp/x.png
 - Gesture rule: sub-slop jitter resolves by release position, never by center — taps must survive finger wobble.
 - Dots mode is one unified 1–10 counter (top row 1–5, bottom 6–10); commit is `count % 10`.
 - Back order: settings → history → exit. Copy rule: result after `=`, expression while typing.
-- Never commit keystores, tokens, `.env`, or APKs. Release is debug-signed; flag before any store upload.
+- Never commit keystores, tokens, `.env`, or APKs. Release is upload-signed locally (`juscalc-upload.jks` + `keystore.properties`, both untracked — back them up); CI falls back to debug signing.
