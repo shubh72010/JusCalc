@@ -9,7 +9,7 @@ activityCompose = "1.13.0"
 kotlin = "2.4.10"
 composeBom = "2026.02.01"
 shapes = "1.2.1"
-evalex = "3.7.0"
+evalex = "3.8.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
